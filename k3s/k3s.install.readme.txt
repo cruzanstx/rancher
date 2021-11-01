@@ -1,0 +1,14 @@
+wget https://github.com/k3s-io/k3s/releases/download/v1.19.14%2Bk3s1/k3s-airgap-images-amd64.tar
+sudo mkdir -p /var/lib/rancher/k3s/agent/images/
+sudo cp ./k3s-airgap-images-$ARCH.tar /var/lib/rancher/k3s/agent/images/
+Place the k3s binary at /usr/local/bin/k3s and ensure it is executable.
+
+Place the binary in /usr/local/bin on each node and ensure it is executable. Place the install script anywhere on each node, and name it install.sh.
+
+
+To install K3s on a single server simply do the following on the server node.
+
+INSTALL_K3S_SKIP_DOWNLOAD=true ./install.sh
+Then, to optionally add additional agents do the following on each agent node. Take care to ensure you replace myserver with the IP or valid DNS of the server and replace mynodetoken with the node token from the server typically at /var/lib/rancher/k3s/server/node-token
+
+INSTALL_K3S_SKIP_DOWNLOAD=true K3S_URL=https://myserver:6443 K3S_TOKEN=mynodetoken ./install.sh
